@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Internship</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px; /* Add margin-top to create space */
+    }
+    
+    .flower-image {
+      width: 100%;
+      max-width: 200px;
+      margin: 0 auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>The Sparks Foundation :</h1>
+    <h1>Khadija AMMOR</h1>
+    <div class="input-group">
+      <label for="input1">SepalLengthCm:</label>
+      <input type="number" id="input1" step="0.01" placeholder="Enter a float number">
+    </div>
+    <div class="input-group">
+      <label for="input2">SepalWidthCm:</label>
+      <input type="number" id="input2" step="0.01" placeholder="Enter a float number">
+    </div>
+    <div class="input-group">
+      <label for="input3">PetalLengthCm:</label>
+      <input type="number" id="input3" step="0.01" placeholder="Enter a float number">
+    </div>
+    <div class="input-group">
+      <label for="input4">PetalWidthCm:</label>
+      <input type="number" id="input4" step="0.01" placeholder="Enter a float number">
+    </div>
+    <img src="https://th.bing.com/th/id/R.31d41e98b165dc32dcff2c27c8421e1c?rik=8L0YhB8KgGgezQ&riu=http%3a%2f%2fwww.phytoimages.siu.edu%2fusers%2fCusman1%2f5_30_14%2fDSCF0206Irissetosa.jpg&ehk=eK7d2J6cSA%2feLkadeaV9s%2f76bitGEiCB77wY%2bi3%2fbOg%3d&risl=&pid=ImgRaw&r=0" alt="Purple Flower" class="flower-image">
+    <button onclick="predict()">Predict</button>
+    <p class="result" id="prediction"></p>
+  </div>
+
+  <script>
+    function predict() {
+      var input1 = parseFloat(document.getElementById("input1").value);
+      var input2 = parseFloat(document.getElementById("input2").value);
+      var input3 = parseFloat(document.getElementById("input3").value);
+      var input4 = parseFloat(document.getElementById("input4").value);
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/predict", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          document.getElementById("prediction").textContent = "Prediction: " + response.prediction;
+        }
+      };
+      var data = JSON.stringify({input1: input1, input2: input2, input3: input3, input4: input4});
+      xhr.send(data);
+    }
+  </script>
+</body>
+</html>
